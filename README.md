@@ -47,6 +47,35 @@ Planned project sequence:
 11. Lag-domain regularization concepts
 12. FPGA/HLS mapping of selected DSP kernels
 
+## Completed Exercises
+
+### Exercise 01: FFT Spectral Leakage
+
+Exercise 01 demonstrates FFT spectral leakage using coherent and non-coherent sinusoidal sampling.
+
+It compares:
+
+- a coherent sinusoid at 125.0 Hz,
+- a non-coherent sinusoid at 123.5 Hz,
+- a sampling rate of 1000 Hz,
+- a record length of 256 samples,
+- an FFT bin spacing of 3.90625 Hz.
+
+Artifacts:
+
+- Python implementation: [python/ex01_fft_spectral_leakage/main.py](python/ex01_fft_spectral_leakage/main.py)
+- Exercise README: [python/ex01_fft_spectral_leakage/README.md](python/ex01_fft_spectral_leakage/README.md)
+- Exercise notes: [python/ex01_fft_spectral_leakage/notes.md](python/ex01_fft_spectral_leakage/notes.md)
+- Generated figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png)
+- Theory notes: [docs/ex01_fft_spectral_leakage_theory.md](docs/ex01_fft_spectral_leakage_theory.md)
+- Interview questions: [docs/ex01_fft_spectral_leakage_interview_questions.md](docs/ex01_fft_spectral_leakage_interview_questions.md)
+- LaTeX technical note: [papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex](papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex)
+- Compiled PDF note: [papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.pdf](papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.pdf)
+
+Key engineering idea:
+
+Spectral leakage occurs when a finite sampled signal does not align with the FFT frequency grid, causing its energy to spread across neighboring frequency bins.
+
 ## Technical Focus Areas
 
 This lab is intended to gradually connect the following areas:
@@ -63,7 +92,9 @@ This lab is intended to gradually connect the following areas:
 
 ## Current Status
 
-The repository is in its initial setup phase. The first exercise is planned around FFT spectral leakage and coherent versus non-coherent sampling.
+Exercise 01 is complete and includes implementation, generated figure, theory notes, interview questions, and a LaTeX technical note with a compiled PDF.
+
+The next planned technical exercise is Exercise 02: Windowing and Frequency Resolution.
 
 ## License
 
