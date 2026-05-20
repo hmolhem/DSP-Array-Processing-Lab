@@ -1,4 +1,4 @@
-\documentclass[11pt]{article}
+﻿\documentclass[11pt]{article}
 
 \usepackage[a4paper,margin=1in]{geometry}
 \usepackage{amsmath,amssymb,bm}
@@ -133,7 +133,40 @@ e^{-j2\pi kn/N},
 k,n = 0,1,\ldots,N-1.
 \end{equation}
 
-Equivalently,
+
+Using the standard DFT twiddle factor
+
+\begin{equation}
+W_N = e^{-j2\pi/N},
+\end{equation}
+
+the matrix-vector form can also be expanded as
+
+\begin{equation}
+\begin{bmatrix}
+X[0] \\
+X[1] \\
+\vdots \\
+X[N-1]
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 & \cdots & 1 \\
+1 & W_N^1 & \cdots & W_N^{N-1} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & W_N^{N-1} & \cdots & W_N^{(N-1)(N-1)}
+\end{bmatrix}
+\begin{bmatrix}
+x[0] \\
+x[1] \\
+\vdots \\
+x[N-1]
+\end{bmatrix}.
+\end{equation}
+
+This expanded form is useful for engineering communication because it makes the projection structure explicit: the sampled signal vector is analyzed against the rows of the DFT matrix, which represent the finite set of FFT frequency-basis vectors.
+
+Equivalently:
 
 \begin{equation}
 X[k]
@@ -420,15 +453,24 @@ k_{\text{eff}} = 31.616.
 
 Therefore, the first case is an exact DFT-bin-aligned experiment, while the second case is an off-grid frequency experiment.
 
-\section{Generated Figure}
+\section{Generated Figures}
 
-The repository stores the generated figure at:
+The repository stores two generated figures for this exercise:
+
+\begin{itemize}
+\item a zoomed line-marker FFT comparison figure,
+\item a stacked stem-plot figure that emphasizes the discrete-bin nature of the FFT.
+\end{itemize}
+
+The line-marker figure is optimized for reports, presentations, and LinkedIn carousel content. The stem figure is included to make the discrete FFT-bin interpretation more explicit.
 
 \begin{center}
 \texttt{python/ex01\_fft\_spectral\_leakage/figures/fft\_spectral\_leakage.png}
+
+\texttt{python/ex01\_fft\_spectral\_leakage/figures/fft\_spectral\_leakage\_stem.png}
 \end{center}
 
-If the figure is available relative to this LaTeX file, it is included below.
+If the figures are available relative to this LaTeX file, they are included below.
 
 \begin{figure}[h]
 \centering
@@ -437,12 +479,24 @@ If the figure is available relative to this LaTeX file, it is included below.
 \includegraphics[width=0.92\linewidth]{../../python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png}
 }
 {
-\fbox{\parbox{0.85\linewidth}{Generated figure not found. Run the Python script from the repository root to generate the FFT spectral leakage figure.}}
+\fbox{\parbox{0.85\linewidth}{Line-marker FFT figure not found. Run the Python script from the repository root to generate the FFT spectral leakage figure.}}
 }
-\caption{FFT spectral leakage comparison between coherent and non-coherent sinusoidal sampling.}
-\label{fig:fft_leakage}
+\caption{Zoomed line-marker FFT spectral leakage comparison between coherent and non-coherent sinusoidal sampling.}
+\label{fig:fft_leakage_line_marker}
 \end{figure}
 
+\begin{figure}[h]
+\centering
+\IfFileExists{../../python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png}
+{
+\includegraphics[width=0.92\linewidth]{../../python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png}
+}
+{
+\fbox{\parbox{0.85\linewidth}{Stem FFT figure not found. Run the Python script from the repository root to generate the FFT spectral leakage stem figure.}}
+}
+\caption{Stacked stem-plot view of the coherent and non-coherent FFT spectra, emphasizing the discrete-bin nature of the FFT.}
+\label{fig:fft_leakage_stem}
+\end{figure}
 \section{Engineering Interpretation}
 
 Spectral leakage is not an implementation defect. It is a consequence of finite-duration measurement and mismatch between the input frequency and the FFT analysis grid.

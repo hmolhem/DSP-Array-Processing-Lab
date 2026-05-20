@@ -301,17 +301,28 @@ Observation:
 
 This is the visual signature of spectral leakage.
 
+The script now generates two complementary figures:
+
+- a zoomed line-marker figure for presentation and carousel use
+- a stacked stem figure for explaining discrete FFT bins
+
 Footer:
 
-Code + figure available in the GitHub repository.
+Code + figures available in the GitHub repository.
 
 Visual Direction:
 
-Use the generated figure:
+Use the zoomed line-marker figure as the primary carousel visual:
 
 python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
 
-Crop or place the figure so labels remain readable.
+Use the stem figure as a supporting technical visual, backup slide, or follow-up post:
+
+python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
+
+The line-marker figure should be the main Slide 8 visual because it is cleaner for mobile viewing.
+
+The stem figure is useful when explaining that the FFT samples a discrete set of frequency bins.
 
 ## Slide 9: Why Engineers Should Care
 
@@ -429,7 +440,7 @@ It is a fundamental finite-window and measurement-grid effect.
 I documented this exercise in my repository, including:
 
 ✅ Python implementation
-✅ Generated FFT figure
+✅ Generated FFT figures: line-marker and stem views
 ✅ Theory notes
 ✅ Matrix-based DFT technical note
 ✅ Interview preparation questions
@@ -457,7 +468,8 @@ Before publishing the carousel:
 
 - Verify slide text is readable on mobile.
 - Use one main idea per slide.
-- Use the generated FFT figure on Slide 8.
+- Use the zoomed line-marker FFT figure on Slide 8.
+- Use the stem FFT figure as a supporting technical visual when explaining discrete FFT bins.
 - Keep equations large and uncluttered.
 - Add consistent slide numbers.
 - Use a professional technical color palette.
@@ -471,9 +483,13 @@ Implementation:
 
 python/ex01_fft_spectral_leakage/main.py
 
-Generated figure:
+Generated line-marker figure:
 
 python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
+
+Generated stem figure:
+
+python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
 
 Theory note:
 
