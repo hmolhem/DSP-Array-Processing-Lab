@@ -116,15 +116,19 @@ Body:
 
 The FFT does not evaluate every possible frequency.
 
-It evaluates a discrete grid.
+It evaluates a discrete frequency grid.
 
 Formula:
 
-Delta f = fs / N
+$$\Delta f = \frac{f_s}{N} = \frac{1000}{256} = 3.90625 \text{ Hz}$$
 
-For this experiment:
+$$f_k = k \cdot \Delta f$$
 
-Delta f = 1000 / 256 = 3.90625 Hz
+Interpretation:
+
+- $\Delta f$ is the FFT bin spacing.
+- $f_k$ is the physical frequency of bin $k$.
+- A sinusoid is coherent only when its frequency lands exactly on this grid.
 
 Footer:
 
@@ -137,6 +141,8 @@ Show a horizontal frequency axis with equally spaced bins.
 Label a few bins:
 
 0 Hz, 3.90625 Hz, 7.8125 Hz, ..., 125 Hz
+
+Keep the equations large and readable.
 
 ## Slide 4: Coherent Sampling
 
@@ -233,31 +239,50 @@ Matrix interpretation
 
 Body:
 
-The DFT can be written as:
+The DFT can be written in vector-matrix form:
 
-X = F_N x
+$$\mathbf{X} = \mathbf{F}_N \mathbf{x}$$
+
+Expanded form for the slide:
+
+$$
+\begin{bmatrix} X[0] \\ X[1] \\ \vdots \\ X[N-1] \end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 & \dots & 1 \\
+1 & W_N^1 & \dots & W_N^{N-1} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & W_N^{N-1} & \dots & W_N^{(N-1)(N-1)}
+\end{bmatrix}
+\begin{bmatrix} x[0] \\ x[1] \\ \vdots \\ x[N-1] \end{bmatrix}
+$$
 
 Where:
 
-- x is the sampled signal vector
-- F_N is the DFT matrix
-- X is the frequency-domain coefficient vector
+- $\mathbf{x}$ is the sampled signal vector.
+- $\mathbf{F}_N$ is the DFT matrix.
+- $\mathbf{X}$ is the frequency-domain coefficient vector.
+- $W_N = e^{-j2\pi/N}$.
 
 Interpretation:
 
-The DFT projects the signal onto a finite set of frequency-basis vectors.
+The DFT projects the sampled signal vector onto a finite set of orthogonal frequency-basis vectors.
+
+If the input sinusoid is exactly on-grid, most of the energy appears in one DFT bin.
+
+If the sinusoid is off-grid, its projection is nonzero across multiple DFT basis vectors. This is spectral leakage.
 
 Footer:
 
-Leakage is off-grid basis mismatch.
+Leakage is off-grid DFT-basis mismatch.
 
 Visual Direction:
 
-Use a block diagram:
+Use a clean block diagram:
 
 sampled vector x -> DFT matrix F_N -> spectrum X
 
-Keep the equation large and clean.
+If the full matrix is too dense for one slide, use the compact equation on the slide and place the expanded matrix as a secondary visual element.
 
 ## Slide 8: Python Result
 
@@ -305,15 +330,23 @@ Spectral leakage affects real engineering systems:
 - radar Doppler processing
 - beamforming and array-processing pipelines
 
+Radar and array-processing example:
+
+A rectangular window has a relatively high first sidelobe level of about -13 dB.
+
+In radar, Doppler processing, and DOA estimation pipelines, sidelobes from a strong target can mask weaker nearby targets, especially when the weaker target has lower radar cross section or lies close in frequency, range, Doppler, or angle.
+
 Footer:
 
 FFT interpretation is not just math. It is an engineering decision.
 
 Visual Direction:
 
-Use icons or small labels for radar, communications, vibration, and arrays.
+Use a simple strong-target / weak-target illustration.
 
-Avoid clutter.
+Show a large main target with sidelobes and a smaller nearby target partially hidden by those sidelobes.
+
+Avoid overstating the result: say "can mask" rather than "always masks."
 
 ## Slide 10: Takeaway and GitHub CTA
 
@@ -351,42 +384,59 @@ Use a clean closing slide with:
 
 ## LinkedIn Post Caption
 
-FFT Spectral Leakage: Why One Sine Wave Becomes Many FFT Bins
+💡 Why does a single, pure sine wave spread across multiple FFT bins?
 
-In Exercise 01 of my DSP-Array-Processing-Lab repository, I implemented a Python simulation to demonstrate FFT spectral leakage.
+If you have ever looked at an FFT spectrum and wondered why a clean frequency looks like a wide dome instead of a sharp needle, you are seeing spectral leakage.
 
-The experiment compares two sinusoidal signals:
+In Exercise 01 of my DSP-Array-Processing-Lab repository, I built a Python simulation to break down the mathematics behind this phenomenon.
 
-- 125.0 Hz: coherent with the FFT grid
-- 123.5 Hz: non-coherent with the FFT grid
+The experiment:
 
-Both use the same sampling rate and record length:
+• Sampling rate fs: 1000 Hz
+• Record length N: 256 samples
+• FFT bin spacing Delta f: 3.90625 Hz
 
-- fs = 1000 Hz
-- N = 256
-- Delta f = 3.90625 Hz
+We compare two cases:
 
-The key result:
+1️⃣ Coherent sampling: 125.0 Hz
 
-The 125.0 Hz sinusoid aligns exactly with FFT bin 32, so its energy is concentrated.
+The frequency lands exactly on FFT bin 32:
 
-The 123.5 Hz sinusoid falls between FFT bins, so its energy spreads across neighboring bins.
+125 / 3.90625 = 32
 
-That spreading is spectral leakage.
+In the ideal noiseless case, the signal aligns with the DFT grid and its energy is concentrated in the corresponding FFT bin.
 
-I also documented the topic from multiple angles:
+2️⃣ Non-coherent sampling: 123.5 Hz
 
-- Python implementation
-- Generated FFT figure
-- Theory notes
-- Interview questions
-- LaTeX technical note with matrix-based DFT formulation
+The frequency lands between FFT bins:
 
-The main lesson is simple but important:
+123.5 / 3.90625 = 31.616
 
-FFT interpretation depends on sampling rate, record length, bin spacing, and signal alignment with the frequency grid.
+The periodic extension of the finite record is no longer smooth at the boundary, so the FFT represents the signal using multiple DFT basis vectors.
 
-This concept is foundational for windowing, spectral estimation, radar Doppler processing, communications, beamforming, and array-processing workflows.
+That spreading of energy is spectral leakage.
+
+🔴 Why radar and antenna-array engineers should care:
+
+A rectangular window has a relatively high first sidelobe level of about -13 dB.
+
+In radar, Doppler processing, and DOA estimation pipelines, sidelobes from a strong target can mask weaker nearby targets, especially when the weaker target has lower radar cross section or lies close in frequency, range, Doppler, or angle.
+
+This is not a coding bug.
+
+It is a fundamental finite-window and measurement-grid effect.
+
+I documented this exercise in my repository, including:
+
+✅ Python implementation
+✅ Generated FFT figure
+✅ Theory notes
+✅ Matrix-based DFT technical note
+✅ Interview preparation questions
+
+🔗 Deep-dive article and repository link will be shared in the first comment.
+
+#DigitalSignalProcessing #FFT #SignalProcessing #Python #Engineering #Radar #MIMO #ArrayProcessing #GitHub
 
 ## Suggested Hashtags
 
