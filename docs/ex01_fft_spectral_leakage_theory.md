@@ -268,21 +268,28 @@ If the peak bin and nearby bins are counted as the main lobe, the leakage estima
 
 ## 15. Visualization Outputs
 
-The Python implementation generates two complementary figures:
+The Python implementation generates two complementary static figures and one animation:
 
 - `fft_spectral_leakage.png`
 - `fft_spectral_leakage_stem.png`
+- `fft_spectral_leakage_animation.gif`
 
 The line-marker figure is zoomed to the 100-150 Hz region so the leakage pattern around the target frequencies is easier to see. This figure is useful for reports, presentations, and LinkedIn carousel material.
 
 The stem figure uses a discrete-bin representation. It is useful for explaining that the FFT does not evaluate a continuous frequency axis; it samples the spectrum at discrete frequency bins.
 
-The two figures serve different purposes:
+The animation sweeps the sinusoidal frequency from 125.0 Hz toward 123.5 Hz and shows how leakage develops as the signal moves away from an exact FFT bin.
+
+The static figures and animation serve different purposes:
 
 - the line-marker figure emphasizes the coherent versus non-coherent leakage pattern,
-- the stem figure emphasizes the finite-bin structure of the FFT.
+- the stem figure emphasizes the finite-bin structure of the FFT,
+- the animation shows the dynamic transition from coherent sampling to non-coherent sampling.
 
 Together, they connect the visual result to the matrix interpretation of the DFT: an on-grid sinusoid projects mainly onto one DFT basis vector, while an off-grid sinusoid has nonzero projections across multiple DFT basis vectors.
+
+The animation also displays the fractional bin index, which makes the transition from coherent to non-coherent sampling easier to interpret.
+
 ## 16. Engineering Interpretation
 
 Spectral leakage is not a coding error. It is a consequence of finite-duration measurement and frequency-grid mismatch.
