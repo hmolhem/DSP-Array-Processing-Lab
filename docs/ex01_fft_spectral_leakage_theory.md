@@ -1,4 +1,4 @@
-# Exercise 01 Theory: FFT Spectral Leakage
+﻿# Exercise 01 Theory: FFT Spectral Leakage
 
 Author: Hossein Molhem
 Created: 2026-05-19
@@ -55,7 +55,54 @@ where:
 
 Each value X[k] measures how strongly the input signal matches a complex sinusoid at bin k.
 
-## 4. FFT Meaning
+
+## 4. Matrix View of the DFT
+
+The DFT can also be written in vector-matrix form:
+
+$$\mathbf{X} = \mathbf{F}_N \mathbf{x}$$
+
+where:
+
+- $\mathbf{x}$ is the sampled signal vector,
+- $\mathbf{F}_N$ is the DFT matrix,
+- $\mathbf{X}$ is the frequency-domain coefficient vector.
+
+The expanded matrix form is:
+
+$$
+\begin{bmatrix}
+X[0] \\
+X[1] \\
+\vdots \\
+X[N-1]
+\end{bmatrix}
+=
+\begin{bmatrix}
+1 & 1 & \dots & 1 \\
+1 & W_N^1 & \dots & W_N^{N-1} \\
+\vdots & \vdots & \ddots & \vdots \\
+1 & W_N^{N-1} & \dots & W_N^{(N-1)(N-1)}
+\end{bmatrix}
+\begin{bmatrix}
+x[0] \\
+x[1] \\
+\vdots \\
+x[N-1]
+\end{bmatrix}
+$$
+
+where:
+
+$$W_N = e^{-j2\pi/N}$$
+
+This matrix view is useful because it shows that the DFT is a projection of the sampled signal vector onto a finite set of orthogonal frequency-basis vectors.
+
+If the input sinusoid is exactly on the FFT grid, the signal is aligned with one DFT basis component and most of its energy appears in one FFT bin.
+
+If the sinusoid is off-grid, its projection is nonzero across multiple DFT basis vectors. This is the matrix-based interpretation of spectral leakage.
+
+## 5. FFT Meaning
 
 The FFT, or Fast Fourier Transform, is an efficient algorithm for computing the DFT.
 
@@ -65,7 +112,7 @@ The FFT reduces the computational cost to approximately N log2(N) operations.
 
 For engineering work, the FFT is the practical tool used to compute the DFT efficiently.
 
-## 5. FFT Frequency Bins
+## 6. FFT Frequency Bins
 
 The FFT does not evaluate every possible frequency. It evaluates a discrete frequency grid.
 
@@ -91,7 +138,7 @@ So the FFT frequency bins are located at:
 - 125 Hz
 - ...
 
-## 6. Coherent Sampling
+## 7. Coherent Sampling
 
 Coherent sampling occurs when the signal frequency lands exactly on one FFT bin.
 
@@ -109,7 +156,7 @@ This means the sampled signal contains an integer number of cycles inside the ob
 
 For the coherent case, the FFT energy is concentrated near one bin.
 
-## 7. Non-Coherent Sampling
+## 8. Non-Coherent Sampling
 
 Non-coherent sampling occurs when the signal frequency does not land exactly on an FFT bin.
 
@@ -127,7 +174,7 @@ The FFT cannot place all signal energy into one bin, so the energy spreads acros
 
 This spreading is called spectral leakage.
 
-## 8. Why Spectral Leakage Occurs
+## 9. Why Spectral Leakage Occurs
 
 The FFT assumes that the finite signal segment repeats periodically.
 
@@ -139,7 +186,7 @@ This artificial discontinuity introduces additional frequency components.
 
 As a result, the FFT spectrum spreads energy away from the true signal frequency.
 
-## 9. Window Interpretation
+## 10. Window Interpretation
 
 Taking N samples from a signal is equivalent to multiplying the infinite signal by a rectangular time window.
 
@@ -151,7 +198,7 @@ The rectangular window has sidelobes, and those sidelobes cause energy to appear
 
 This is another way to understand spectral leakage.
 
-## 10. Single-Sided FFT for Real Signals
+## 11. Single-Sided FFT for Real Signals
 
 For real-valued signals, the full FFT has conjugate symmetry.
 
@@ -163,7 +210,7 @@ The corresponding frequency bins are computed using numpy.fft.rfftfreq.
 
 This keeps only the non-negative frequency components.
 
-## 11. Magnitude Scaling
+## 12. Magnitude Scaling
 
 The raw FFT output is complex.
 
@@ -179,7 +226,7 @@ magnitude[1:-1] *= 2
 
 This step makes the single-sided amplitude spectrum easier to interpret.
 
-## 12. Normalized dB Scale
+## 13. Normalized dB Scale
 
 The figure uses a normalized decibel scale.
 
@@ -197,7 +244,7 @@ With this convention:
 - smaller components appear as negative dB values,
 - leakage sidelobes become visually clear.
 
-## 13. Practical Leakage Measurement
+## 14. Practical Leakage Measurement
 
 Spectral leakage can be measured in different ways. One useful engineering definition is the ratio of energy outside the main peak region to the total spectral energy.
 
@@ -219,7 +266,24 @@ If only the peak bin is counted as the main region, the leakage estimate is stri
 
 If the peak bin and nearby bins are counted as the main lobe, the leakage estimate is more tolerant.
 
-## 14. Engineering Interpretation
+## 15. Visualization Outputs
+
+The Python implementation generates two complementary figures:
+
+- `fft_spectral_leakage.png`
+- `fft_spectral_leakage_stem.png`
+
+The line-marker figure is zoomed to the 100-150 Hz region so the leakage pattern around the target frequencies is easier to see. This figure is useful for reports, presentations, and LinkedIn carousel material.
+
+The stem figure uses a discrete-bin representation. It is useful for explaining that the FFT does not evaluate a continuous frequency axis; it samples the spectrum at discrete frequency bins.
+
+The two figures serve different purposes:
+
+- the line-marker figure emphasizes the coherent versus non-coherent leakage pattern,
+- the stem figure emphasizes the finite-bin structure of the FFT.
+
+Together, they connect the visual result to the matrix interpretation of the DFT: an on-grid sinusoid projects mainly onto one DFT basis vector, while an off-grid sinusoid has nonzero projections across multiple DFT basis vectors.
+## 16. Engineering Interpretation
 
 Spectral leakage is not a coding error. It is a consequence of finite-duration measurement and frequency-grid mismatch.
 
@@ -242,7 +306,7 @@ Before interpreting FFT peaks, an engineer should check:
 - observation window length,
 - whether windowing is needed.
 
-## 15. Connection to Exercise 02
+## 17. Connection to Exercise 02
 
 Exercise 01 uses a rectangular observation window implicitly.
 
@@ -256,7 +320,7 @@ Windowing reduces sidelobe leakage but usually widens the main lobe.
 
 This creates an important engineering tradeoff between leakage suppression and frequency resolution.
 
-## 16. Summary
+## 18. Summary
 
 The FFT represents a finite signal using discrete frequency bins.
 

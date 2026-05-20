@@ -21,11 +21,13 @@ In this example:
 - N = 256
 - Delta f = 3.90625 Hz
 
-The coherent sinusoid is placed at 125.0 Hz, which aligns with an FFT bin.
+The coherent sinusoid is placed at 125.0 Hz, which aligns with FFT bin 32.
 
-The non-coherent sinusoid is placed at 123.5 Hz, which does not align with an FFT bin.
+The non-coherent sinusoid is placed at 123.5 Hz, which does not align exactly with an FFT bin.
 
 The non-coherent case spreads energy into neighboring bins, producing spectral leakage.
+
+This exercise uses an implicit rectangular observation window because no explicit tapering window is applied before the FFT.
 
 ## Run
 
@@ -35,26 +37,36 @@ python python/ex01_fft_spectral_leakage/main.py
 
 ## Output
 
-The script prints the experiment parameters and saves the FFT comparison figure to:
+The script prints the experiment parameters and saves two FFT comparison figures:
 
-python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
+- python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
+- python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
 
-## Result
+## Figures
 
-The generated figure compares the normalized FFT magnitude spectra for coherent and non-coherent sampling.
+The line-marker figure is zoomed to 100-150 Hz so the leakage pattern around the target frequencies is easier to see. This figure is optimized for reports, presentations, and LinkedIn carousel content.
 
-Expected observation:
+The stem figure uses two stacked panels to emphasize the discrete-bin nature of the FFT:
+
+- top panel: coherent sampling at 125.0 Hz,
+- bottom panel: non-coherent sampling at 123.5 Hz.
+
+## Expected Observation
 
 - coherent sampling produces a concentrated spectral peak,
-- non-coherent sampling spreads energy across multiple FFT bins.
+- non-coherent sampling spreads energy across multiple FFT bins,
+- the stem view makes the discrete FFT bins more explicit.
 
 ## Engineering Relevance
 
 Spectral leakage affects practical frequency analysis in instrumentation, communications, radar, vibration analysis, and array-processing systems.
 
-Understanding leakage is important before applying windowing, filtering, covariance estimation, or DOA algorithms.
+Understanding leakage is important before applying windowing, filtering, covariance estimation, beamforming, or DOA algorithms.
+
+The implicit rectangular-window case in this exercise prepares the transition to Exercise 02, where explicit window functions can be compared.
 
 ## Files
 
 - main.py: Python implementation and figure generation.
-- figures/fft_spectral_leakage.png: Generated FFT comparison figure.
+- figures/fft_spectral_leakage.png: Zoomed line-marker FFT comparison figure.
+- figures/fft_spectral_leakage_stem.png: Stem-plot figure showing the discrete-bin FFT view.
