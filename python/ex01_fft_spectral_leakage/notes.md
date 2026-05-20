@@ -106,6 +106,48 @@ If the input sinusoid is exactly on-grid, most of the energy appears in one DFT 
 
 If the sinusoid is off-grid, its projection is nonzero across multiple DFT basis vectors. This is the matrix-view interpretation of spectral leakage.
 
+
+## Animation Notes
+
+The exercise includes an animation script:
+
+`animation.py`
+
+The animation output is:
+
+`figures/fft_spectral_leakage_animation.gif`
+
+The animation sweeps the sinusoidal frequency from 125.0 Hz to 123.5 Hz.
+
+This sweep shows the transition from coherent sampling to non-coherent sampling:
+
+- at 125.0 Hz, the sinusoid aligns with FFT bin 32,
+- as the frequency moves away from 125.0 Hz, the signal becomes off-grid,
+- the FFT energy spreads across multiple neighboring bins.
+
+The animation displays the fractional bin index:
+
+$$k_{\text{frac}} = \frac{f_0}{\Delta f}$$
+
+where:
+
+$$\Delta f = \frac{f_s}{N}$$
+
+When $k_{\text{frac}}$ is an integer, the sinusoid is aligned with the FFT grid.
+
+When $k_{\text{frac}}$ is non-integer, the sinusoid is off-grid and has nonzero projections onto multiple DFT basis vectors.
+
+The animation implementation avoids clearing and rebuilding the Matplotlib axes inside the update loop.
+
+Static plot elements are created once. Dynamic plot elements are updated using:
+
+- `set_ydata()` for the time-domain signal,
+- `set_segments()` for the FFT stem lines,
+- `set_offsets()` for FFT stem markers,
+- `set_xdata()` for the moving frequency marker.
+
+This design is more efficient and better aligned with future extensions such as live DSP visualization or streaming FFT displays.
+
 ## Practical Lesson
 
 Before interpreting FFT peaks, always consider:

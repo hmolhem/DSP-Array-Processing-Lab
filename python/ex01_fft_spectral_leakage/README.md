@@ -37,7 +37,7 @@ python python/ex01_fft_spectral_leakage/main.py
 
 ## Output
 
-The script prints the experiment parameters and saves two FFT comparison figures:
+The main script prints the experiment parameters and saves two FFT comparison figures:
 
 - python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
 - python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
@@ -50,6 +50,33 @@ The stem figure uses two stacked panels to emphasize the discrete-bin nature of 
 
 - top panel: coherent sampling at 125.0 Hz,
 - bottom panel: non-coherent sampling at 123.5 Hz.
+
+
+## Animation
+
+This exercise also includes an educational animation script:
+
+python/ex01_fft_spectral_leakage/animation.py
+
+Run it from the repository root with:
+
+python python/ex01_fft_spectral_leakage/animation.py
+
+The animation output is saved to:
+
+python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif
+
+The animation sweeps the sinusoidal frequency from 125.0 Hz to 123.5 Hz and shows how the FFT spectrum changes as the signal moves away from an exact FFT bin.
+
+The animation displays:
+
+- the time-domain sinusoid,
+- the FFT stem spectrum,
+- the fractional bin index k_frac,
+- the nearest FFT bin,
+- the bin offset from the nearest integer bin.
+
+The animation code avoids clearing and rebuilding the Matplotlib axes inside the update loop. Static plot elements are created once, while dynamic objects are updated using set_ydata(), set_segments(), set_offsets(), and set_xdata().
 
 ## Expected Observation
 
@@ -67,6 +94,8 @@ The implicit rectangular-window case in this exercise prepares the transition to
 
 ## Files
 
-- main.py: Python implementation and figure generation.
+- main.py: Python implementation and static figure generation.
+- animation.py: GIF animation showing the dynamic development of spectral leakage.
 - figures/fft_spectral_leakage.png: Zoomed line-marker FFT comparison figure.
 - figures/fft_spectral_leakage_stem.png: Stem-plot figure showing the discrete-bin FFT view.
+- figures/fft_spectral_leakage_animation.gif: Animation showing frequency movement from coherent to non-coherent sampling.

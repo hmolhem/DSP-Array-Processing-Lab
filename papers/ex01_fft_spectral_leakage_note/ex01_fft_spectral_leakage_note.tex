@@ -48,7 +48,7 @@ The answer is that the FFT evaluates a finite set of orthogonal frequency-grid b
 
 The simulation uses the parameters listed in Table~\ref{tab:sim_params}.
 
-\begin{table}[h]
+\begin{table}[htbp]
 \centering
 \caption{Exercise 01 simulation parameters.}
 \label{tab:sim_params}
@@ -453,26 +453,29 @@ k_{\text{eff}} = 31.616.
 
 Therefore, the first case is an exact DFT-bin-aligned experiment, while the second case is an off-grid frequency experiment.
 
-\section{Generated Figures}
+\section{Generated Figures and Animation}
 
-The repository stores two generated figures for this exercise:
+The repository stores two generated static figures and one generated animation for this exercise:
 
 \begin{itemize}
 \item a zoomed line-marker FFT comparison figure,
-\item a stacked stem-plot figure that emphasizes the discrete-bin nature of the FFT.
+\item a stacked stem-plot figure that emphasizes the discrete-bin nature of the FFT,
+\item a GIF animation showing the transition from coherent sampling to non-coherent sampling.
 \end{itemize}
 
-The line-marker figure is optimized for reports, presentations, and LinkedIn carousel content. The stem figure is included to make the discrete FFT-bin interpretation more explicit.
+The line-marker figure is optimized for reports, presentations, and LinkedIn carousel content. The stem figure is included to make the discrete FFT-bin interpretation more explicit. The animation shows how leakage develops as the sinusoidal frequency moves from the coherent case at 125.0 Hz toward the non-coherent case at 123.5 Hz.
 
 \begin{center}
 \texttt{python/ex01\_fft\_spectral\_leakage/figures/fft\_spectral\_leakage.png}
 
 \texttt{python/ex01\_fft\_spectral\_leakage/figures/fft\_spectral\_leakage\_stem.png}
+
+\texttt{python/ex01\_fft\_spectral\_leakage/figures/fft\_spectral\_leakage\_animation.gif}
 \end{center}
 
-If the figures are available relative to this LaTeX file, they are included below.
+If the static figures are available relative to this LaTeX file, they are included below. The GIF animation is documented as a repository artifact but is not embedded in the PDF, because standard PDF output does not reliably support animated playback.
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \IfFileExists{../../python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png}
 {
@@ -485,7 +488,7 @@ If the figures are available relative to this LaTeX file, they are included belo
 \label{fig:fft_leakage_line_marker}
 \end{figure}
 
-\begin{figure}[h]
+\begin{figure}[htbp]
 \centering
 \IfFileExists{../../python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png}
 {

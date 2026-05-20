@@ -440,7 +440,7 @@ It is a fundamental finite-window and measurement-grid effect.
 I documented this exercise in my repository, including:
 
 ✅ Python implementation
-✅ Generated FFT figures: line-marker and stem views
+✅ Generated FFT figures and animation: line-marker, stem, and GIF views
 ✅ Theory notes
 ✅ Matrix-based DFT technical note
 ✅ Interview preparation questions
@@ -470,6 +470,7 @@ Before publishing the carousel:
 - Use one main idea per slide.
 - Use the zoomed line-marker FFT figure on Slide 8.
 - Use the stem FFT figure as a supporting technical visual when explaining discrete FFT bins.
+- Use the animation GIF as a dynamic supporting asset for LinkedIn posts, Substack, or a follow-up carousel.
 - Keep equations large and uncluttered.
 - Add consistent slide numbers.
 - Use a professional technical color palette.
@@ -483,6 +484,10 @@ Implementation:
 
 python/ex01_fft_spectral_leakage/main.py
 
+Animation script:
+
+python/ex01_fft_spectral_leakage/animation.py
+
 Generated line-marker figure:
 
 python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
@@ -490,6 +495,10 @@ python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png
 Generated stem figure:
 
 python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
+
+Generated animation GIF:
+
+python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif
 
 Theory note:
 

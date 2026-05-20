@@ -64,9 +64,12 @@ It compares:
 Artifacts:
 
 - Python implementation: [python/ex01_fft_spectral_leakage/main.py](python/ex01_fft_spectral_leakage/main.py)
+- Animation script: [python/ex01_fft_spectral_leakage/animation.py](python/ex01_fft_spectral_leakage/animation.py)
 - Exercise README: [python/ex01_fft_spectral_leakage/README.md](python/ex01_fft_spectral_leakage/README.md)
 - Exercise notes: [python/ex01_fft_spectral_leakage/notes.md](python/ex01_fft_spectral_leakage/notes.md)
-- Generated figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png)
+- Generated line-marker figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png)
+- Generated stem figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png)
+- Generated animation GIF: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif)
 - Theory notes: [docs/ex01_fft_spectral_leakage_theory.md](docs/ex01_fft_spectral_leakage_theory.md)
 - Interview questions: [docs/ex01_fft_spectral_leakage_interview_questions.md](docs/ex01_fft_spectral_leakage_interview_questions.md)
 - LaTeX technical note: [papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex](papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex)
@@ -92,7 +95,7 @@ This lab is intended to gradually connect the following areas:
 
 ## Current Status
 
-Exercise 01 is complete and includes implementation, generated figure, theory notes, interview questions, and a LaTeX technical note with a compiled PDF.
+Exercise 01 is complete and includes implementation, static figures, animation, theory notes, interview questions, and a LaTeX technical note with a compiled PDF.
 
 The next planned technical exercise is Exercise 02: Windowing and Frequency Resolution.
 
