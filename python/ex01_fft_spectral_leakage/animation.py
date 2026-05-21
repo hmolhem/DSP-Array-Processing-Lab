@@ -8,8 +8,8 @@ Created:
     2026-05-20
 
 Purpose:
-    Generate an educational animation showing how FFT spectral leakage
-    develops as a sinusoidal frequency moves away from an exact FFT bin.
+    Generate educational GIF and MP4 animations showing how FFT spectral
+    leakage develops as a sinusoidal frequency moves away from an exact FFT bin.
 
 Description:
     The animation sweeps the sinusoidal frequency from the coherent case
@@ -19,28 +19,44 @@ Description:
     The bottom panel shows the corresponding single-sided FFT magnitude
     spectrum using a discrete-bin stem-style representation.
 
-    This animation is intended for technical documentation, LinkedIn content,
-    Substack explanation, and interview-oriented DSP education.
+    The script saves two outputs:
+
+    - fft_spectral_leakage_animation.gif
+    - fft_spectral_leakage_animation.mp4
+
+    The GIF is useful for GitHub documentation and quick previews.
+    The MP4 is better suited for LinkedIn and other social-media platforms.
 
 Engineering Notes:
     This script avoids clearing and rebuilding Matplotlib axes inside the
     animation update loop. Static elements such as labels, limits, grids, and
     axis structure are created once. During each frame, only dynamic data are
-    updated using set_data(), set_segments(), set_offsets(), and set_xdata().
+    updated using set_ydata(), set_segments(), set_offsets(), and set_xdata().
 
     This design is more efficient and better aligned with future extensions
     such as live DSP visualization, streaming FFT displays, or monitoring
     hardware-generated data.
+
+    The MP4 writer uses imageio-ffmpeg to locate an FFmpeg executable without
+    requiring the user to manually add FFmpeg to the system PATH.
+
+    The time-domain panel shows only the first 50 ms for readability.
+    The FFT is computed using the full 256-sample record.
 """
 
 from pathlib import Path
 
+import imageio_ffmpeg
+import matplotlib as mpl
 import matplotlib.pyplot as plt
 import numpy as np
-from matplotlib.animation import FuncAnimation, PillowWriter
+from matplotlib.animation import FFMpegWriter, FuncAnimation, PillowWriter
 from matplotlib.collections import LineCollection
 
 from main import compute_single_sided_fft, generate_sine_wave, magnitude_to_db
+
+
+mpl.rcParams["animation.ffmpeg_path"] = imageio_ffmpeg.get_ffmpeg_exe()
 
 
 def compute_frame_data(
@@ -52,7 +68,7 @@ def compute_frame_data(
     y_min_db,
 ):
     """
-    Compute the time-domain signal and the visible FFT-bin data for one frame.
+    Compute the time-domain signal and visible FFT-bin data for one frame.
 
     Parameters
     ----------
@@ -141,15 +157,17 @@ def create_spectral_leakage_animation(
     start_frequency_hz,
     end_frequency_hz,
     num_frames,
-    output_path,
+    gif_output_path,
+    mp4_output_path,
     x_min_hz=100.0,
     x_max_hz=150.0,
     y_min_db=-80.0,
     y_max_db=5.0,
     fps=15,
+    time_display_window_s=0.05,
 ):
     """
-    Create and save the FFT spectral leakage animation.
+    Create and save the FFT spectral leakage animation as GIF and MP4.
 
     Parameters
     ----------
@@ -163,8 +181,10 @@ def create_spectral_leakage_animation(
         Ending sinusoidal frequency in hertz.
     num_frames : int
         Number of animation frames.
-    output_path : pathlib.Path
+    gif_output_path : pathlib.Path
         Output path for the generated GIF animation.
+    mp4_output_path : pathlib.Path
+        Output path for the generated MP4 animation.
     x_min_hz : float, optional
         Minimum frequency shown in the FFT panel.
     x_max_hz : float, optional
@@ -176,12 +196,15 @@ def create_spectral_leakage_animation(
     y_max_db : float, optional
         Maximum dB value shown in the FFT panel.
     fps : int, optional
-        Frames per second used when saving the GIF animation.
+        Frames per second used when saving the animations.
+    time_display_window_s : float, optional
+        Time span shown in the time-domain panel. This affects only the
+        display window, not the FFT analysis record.
 
     Returns
     -------
-    output_path : pathlib.Path
-        Path to the saved animation file.
+    output_paths : tuple[pathlib.Path, pathlib.Path]
+        Paths to the saved GIF and MP4 animation files.
 
     Notes
     -----
@@ -232,9 +255,7 @@ def create_spectral_leakage_animation(
         fontweight="bold",
     )
 
-    # -------------------------
-    # Static time-domain panel
-    # -------------------------
+    # Static time-domain panel.
     time_line, = time_ax.plot(
         time_vector,
         signal,
@@ -245,15 +266,13 @@ def create_spectral_leakage_animation(
         f"Time-domain sinusoid | f0 = {initial_frequency_hz:.2f} Hz"
     )
 
-    time_ax.set_xlim(0.0, 0.05)
+    time_ax.set_xlim(0.0, time_display_window_s)
     time_ax.set_ylim(-1.2, 1.2)
     time_ax.set_xlabel("Time (s)")
     time_ax.set_ylabel("Amplitude")
     time_ax.grid(True, alpha=0.3)
 
-    # -------------------------
-    # Static FFT-domain panel
-    # -------------------------
+    # Static FFT-domain panel.
     stem_segments = build_stem_segments(
         visible_freqs,
         visible_magnitude_db,
@@ -278,7 +297,7 @@ def create_spectral_leakage_animation(
         linewidth=1.4,
     )
 
-    fft_title = fft_ax.set_title("")
+    fft_title = fft_ax.set_title("FFT stem spectrum")
     fractional_bin_text = fft_ax.text(
         0.02,
         0.92,
@@ -384,14 +403,28 @@ def create_spectral_leakage_animation(
         blit=False,
     )
 
-    output_path.parent.mkdir(parents=True, exist_ok=True)
+    gif_output_path.parent.mkdir(parents=True, exist_ok=True)
+    mp4_output_path.parent.mkdir(parents=True, exist_ok=True)
 
-    writer = PillowWriter(fps=fps)
-    animation.save(output_path, writer=writer)
+    gif_writer = PillowWriter(fps=fps)
+    animation.save(gif_output_path, writer=gif_writer)
+
+    mp4_writer = FFMpegWriter(
+        fps=fps,
+        codec="libx264",
+        bitrate=1800,
+        extra_args=[
+            "-pix_fmt",
+            "yuv420p",
+            "-movflags",
+            "+faststart",
+        ],
+    )
+    animation.save(mp4_output_path, writer=mp4_writer)
 
     plt.close(fig)
 
-    return output_path
+    return gif_output_path, mp4_output_path
 
 
 def main():
@@ -405,7 +438,7 @@ def main():
     Returns
     -------
     None
-        The function saves a GIF animation and prints the output path.
+        The function saves GIF and MP4 animations and prints their paths.
     """
     sampling_rate_hz = 1000.0
     num_samples = 256
@@ -419,22 +452,26 @@ def main():
     y_min_db = -80.0
     y_max_db = 5.0
     fps = 15
+    time_display_window_s = 0.05
 
     output_dir = Path(__file__).resolve().parent / "figures"
-    output_path = output_dir / "fft_spectral_leakage_animation.gif"
+    gif_output_path = output_dir / "fft_spectral_leakage_animation.gif"
+    mp4_output_path = output_dir / "fft_spectral_leakage_animation.mp4"
 
-    saved_path = create_spectral_leakage_animation(
+    saved_gif_path, saved_mp4_path = create_spectral_leakage_animation(
         sampling_rate_hz=sampling_rate_hz,
         num_samples=num_samples,
         start_frequency_hz=start_frequency_hz,
         end_frequency_hz=end_frequency_hz,
         num_frames=num_frames,
-        output_path=output_path,
+        gif_output_path=gif_output_path,
+        mp4_output_path=mp4_output_path,
         x_min_hz=x_min_hz,
         x_max_hz=x_max_hz,
         y_min_db=y_min_db,
         y_max_db=y_max_db,
         fps=fps,
+        time_display_window_s=time_display_window_s,
     )
 
     print("Exercise 01: FFT spectral leakage animation")
@@ -446,7 +483,10 @@ def main():
     print(f"FFT plot range: {x_min_hz} Hz to {x_max_hz} Hz")
     print(f"Displayed dynamic range: {y_min_db} dB to {y_max_db} dB")
     print(f"Animation FPS: {fps}")
-    print(f"Saved animation: {saved_path}")
+    print(f"Time display window: 0.0 s to {time_display_window_s} s")
+    print(f"FFT analysis record length: {num_samples / sampling_rate_hz:.3f} s")
+    print(f"Saved GIF animation: {saved_gif_path}")
+    print(f"Saved MP4 animation: {saved_mp4_path}")
 
 
 if __name__ == "__main__":

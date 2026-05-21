@@ -268,11 +268,12 @@ If the peak bin and nearby bins are counted as the main lobe, the leakage estima
 
 ## 15. Visualization Outputs
 
-The Python implementation generates two complementary static figures and one animation:
+The Python implementation generates two complementary static figures and two animation outputs:
 
 - `fft_spectral_leakage.png`
 - `fft_spectral_leakage_stem.png`
 - `fft_spectral_leakage_animation.gif`
+- `fft_spectral_leakage_animation.mp4`
 
 The line-marker figure is zoomed to the 100-150 Hz region so the leakage pattern around the target frequencies is easier to see. This figure is useful for reports, presentations, and LinkedIn carousel material.
 
@@ -280,16 +281,18 @@ The stem figure uses a discrete-bin representation. It is useful for explaining 
 
 The animation sweeps the sinusoidal frequency from 125.0 Hz toward 123.5 Hz and shows how leakage develops as the signal moves away from an exact FFT bin.
 
-The static figures and animation serve different purposes:
+The GIF output is useful for GitHub documentation and quick previews. The MP4 output is better suited for LinkedIn and other video-based social-media platforms.
+
+The static figures and animation outputs serve different purposes:
 
 - the line-marker figure emphasizes the coherent versus non-coherent leakage pattern,
 - the stem figure emphasizes the finite-bin structure of the FFT,
-- the animation shows the dynamic transition from coherent sampling to non-coherent sampling.
+- the GIF animation provides a lightweight repository preview,
+- the MP4 animation provides a cleaner video format for LinkedIn posting.
 
 Together, they connect the visual result to the matrix interpretation of the DFT: an on-grid sinusoid projects mainly onto one DFT basis vector, while an off-grid sinusoid has nonzero projections across multiple DFT basis vectors.
 
 The animation also displays the fractional bin index, which makes the transition from coherent to non-coherent sampling easier to interpret.
-
 ## 16. Engineering Interpretation
 
 Spectral leakage is not a coding error. It is a consequence of finite-duration measurement and frequency-grid mismatch.

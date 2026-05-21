@@ -62,9 +62,11 @@ Run it from the repository root with:
 
 python python/ex01_fft_spectral_leakage/animation.py
 
-The animation output is saved to:
+The animation outputs are saved to:
 
 python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif
+
+python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.mp4
 
 The animation sweeps the sinusoidal frequency from 125.0 Hz to 123.5 Hz and shows how the FFT spectrum changes as the signal moves away from an exact FFT bin.
 
@@ -77,6 +79,10 @@ The animation displays:
 - the bin offset from the nearest integer bin.
 
 The animation code avoids clearing and rebuilding the Matplotlib axes inside the update loop. Static plot elements are created once, while dynamic objects are updated using set_ydata(), set_segments(), set_offsets(), and set_xdata().
+
+The time-domain panel shows only the first 50 ms for readability. The FFT is still computed using the full 256-sample record.
+
+The GIF output is useful for GitHub documentation and quick previews. The MP4 output is better suited for LinkedIn and other social-media platforms.
 
 ## Expected Observation
 
@@ -98,4 +104,5 @@ The implicit rectangular-window case in this exercise prepares the transition to
 - animation.py: GIF animation showing the dynamic development of spectral leakage.
 - figures/fft_spectral_leakage.png: Zoomed line-marker FFT comparison figure.
 - figures/fft_spectral_leakage_stem.png: Stem-plot figure showing the discrete-bin FFT view.
-- figures/fft_spectral_leakage_animation.gif: Animation showing frequency movement from coherent to non-coherent sampling.
+- figures/fft_spectral_leakage_animation.gif: GIF animation showing frequency movement from coherent to non-coherent sampling.
+- figures/fft_spectral_leakage_animation.mp4: MP4 animation optimized for LinkedIn/video sharing.
