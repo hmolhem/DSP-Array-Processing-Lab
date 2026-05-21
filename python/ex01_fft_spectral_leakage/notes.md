@@ -113,9 +113,11 @@ The exercise includes an animation script:
 
 `animation.py`
 
-The animation output is:
+The animation outputs are:
 
 `figures/fft_spectral_leakage_animation.gif`
+
+`figures/fft_spectral_leakage_animation.mp4`
 
 The animation sweeps the sinusoidal frequency from 125.0 Hz to 123.5 Hz.
 
@@ -127,11 +129,11 @@ This sweep shows the transition from coherent sampling to non-coherent sampling:
 
 The animation displays the fractional bin index:
 
-$$k_{\text{frac}} = \frac{f_0}{\Delta f}$$
+$k_{\text{frac}} = \frac{f_0}{\Delta f}$
 
 where:
 
-$$\Delta f = \frac{f_s}{N}$$
+$\Delta f = \frac{f_s}{N}$
 
 When $k_{\text{frac}}$ is an integer, the sinusoid is aligned with the FFT grid.
 
@@ -147,6 +149,10 @@ Static plot elements are created once. Dynamic plot elements are updated using:
 - `set_xdata()` for the moving frequency marker.
 
 This design is more efficient and better aligned with future extensions such as live DSP visualization or streaming FFT displays.
+
+The time-domain panel displays only the first 50 ms for readability. The FFT analysis still uses the full 256-sample record.
+
+The GIF output is useful for GitHub documentation and quick previews. The MP4 output is better suited for LinkedIn and other video-based social-media platforms.
 
 ## Practical Lesson
 

@@ -15,7 +15,7 @@ The post is designed to accompany one or more of the following assets:
 - LinkedIn carousel storyboard
 - zoomed FFT line-marker figure
 - FFT stem figure
-- FFT spectral leakage animation GIF
+- FFT spectral leakage animation in GIF and MP4 formats
 - GitHub repository link
 - future Substack/deep-dive article
 
@@ -33,7 +33,8 @@ python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png
 
 Recommended posting strategy:
 
-- Use the GIF animation if LinkedIn accepts the format cleanly.
+- Use the MP4 animation for LinkedIn video posting.
+- Use the GIF animation for GitHub documentation or quick previews.
 - Use the carousel if a more structured educational post is preferred.
 - Use the line-marker figure for a simple one-image post.
 - Use the stem figure in a follow-up technical comment or second post.
@@ -76,7 +77,7 @@ To make the concept easier to see, I generated:
 
 ✅ a zoomed FFT line-marker figure
 ✅ a discrete-bin stem plot
-✅ an animation showing the transition from coherent to non-coherent sampling
+✅ GIF and MP4 animations showing the transition from coherent to non-coherent sampling
 ✅ a LaTeX technical note with matrix-based DFT formulation
 ✅ interview-style review questions
 
@@ -121,7 +122,7 @@ Exercise 01 artifacts include:
 - Python implementation
 - FFT line-marker figure
 - FFT stem figure
-- FFT spectral leakage animation
+- FFT spectral leakage animation in GIF and MP4 formats
 - theory notes
 - interview questions
 - LaTeX technical note and compiled PDF

@@ -70,6 +70,7 @@ Artifacts:
 - Generated line-marker figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage.png)
 - Generated stem figure: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_stem.png)
 - Generated animation GIF: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.gif)
+- Generated animation MP4: [python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.mp4](python/ex01_fft_spectral_leakage/figures/fft_spectral_leakage_animation.mp4)
 - Theory notes: [docs/ex01_fft_spectral_leakage_theory.md](docs/ex01_fft_spectral_leakage_theory.md)
 - Interview questions: [docs/ex01_fft_spectral_leakage_interview_questions.md](docs/ex01_fft_spectral_leakage_interview_questions.md)
 - LaTeX technical note: [papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex](papers/ex01_fft_spectral_leakage_note/ex01_fft_spectral_leakage_note.tex)
