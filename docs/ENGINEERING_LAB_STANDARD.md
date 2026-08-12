@@ -1,4 +1,4 @@
-﻿# DSP-Array-Processing-Lab â€” Engineering Lab Standard
+﻿# DSP-Array-Processing-Lab — Engineering Lab Standard
 
 ## 1. Purpose
 
@@ -8,7 +8,7 @@ The objective is not to build a collection of disconnected tutorials or code exa
 
 The expected engineering flow is:
 
-\[
+$$
 \text{Problem}
 \rightarrow
 \text{Theory}
@@ -20,11 +20,11 @@ The expected engineering flow is:
 \text{Validation}
 \rightarrow
 \text{Engineering Interpretation}
-\]
+$$
 
 For advanced labs:
 
-\[
+$$
 \text{Failure Analysis}
 \rightarrow
 \text{Statistical Evaluation}
@@ -32,7 +32,7 @@ For advanced labs:
 \text{Computational Analysis}
 \rightarrow
 \text{Real-Time / Hardware Considerations}
-\]
+$$
 
 ---
 
@@ -63,14 +63,14 @@ A typical lab may use:
 
 ```text
 python/
-â””â”€â”€ exXX_topic_name/
-    â”œâ”€â”€ main.py
-    â”œâ”€â”€ experiments.py
-    â”œâ”€â”€ README.md
-    â”œâ”€â”€ notes.md
-    â”œâ”€â”€ figures/
-    â”œâ”€â”€ results/
-    â””â”€â”€ tests/
+└── exXX_topic_name/
+    ├── main.py
+    ├── experiments.py
+    ├── README.md
+    ├── notes.md
+    ├── figures/
+    ├── results/
+    └── tests/
 ```
 
 Not every lab requires every file or directory.
@@ -116,7 +116,7 @@ LaTeX and PDF should be reserved primarily for selected Portfolio Milestones, fo
 
 The preferred documentation workflow is:
 
-\[
+$$
 \text{Markdown}
 \rightarrow
 \text{Technical Maturity}
@@ -124,7 +124,7 @@ The preferred documentation workflow is:
 \text{LaTeX}
 \rightarrow
 \text{PDF}
-\]
+$$
 
 ---
 
@@ -190,9 +190,9 @@ Equations should be written using LaTeX-compatible Markdown whenever practical.
 
 Example:
 
-\[
+$$
 \Delta f = \frac{f_s}{N}
-\]
+$$
 
 where:
 
@@ -204,9 +204,9 @@ For matrix algorithms, dimensions should be stated when useful.
 
 For example:
 
-\[
+$$
 \mathbf{X}\in\mathbb{C}^{M\times K}
-\]
+$$
 
 where:
 
@@ -219,7 +219,7 @@ where:
 
 The default implementation sequence is:
 
-\[
+$$
 \text{Theory}
 \rightarrow
 \text{Clear Python Reference}
@@ -227,7 +227,7 @@ The default implementation sequence is:
 \text{Validation}
 \rightarrow
 \text{Optimization}
-\]
+$$
 
 The first implementation should prioritize:
 
@@ -420,12 +420,12 @@ When randomness affects algorithm performance, Monte Carlo evaluation should be 
 
 For an estimated parameter:
 
-\[
+$$
 \hat{\theta}_1,
 \hat{\theta}_2,
 \ldots,
 \hat{\theta}_L
-\]
+$$
 
 over (L) trials, useful metrics include:
 
@@ -500,27 +500,27 @@ Advanced labs should progressively analyze:
 
 Examples include comparing:
 
-\[
+$$
 O(N^2)
-\]
+$$
 
 with:
 
-\[
+$$
 O(N\log N).
-\]
+$$
 
 For matrix algorithms, complexity should be related to relevant dimensions.
 
 For example, covariance estimation:
 
-\[
+$$
 \hat{\mathbf R}
-===============
+=
 
 \frac{1}{K}
 \mathbf X\mathbf X^H
-\]
+$$
 
 should be interpreted in terms of:
 
@@ -553,7 +553,7 @@ Useful questions include:
 
 Selected algorithms may follow the progression:
 
-\[
+$$
 \text{Python}
 \rightarrow
 \text{Optimized Python}
@@ -563,7 +563,7 @@ Selected algorithms may follow the progression:
 \text{Fixed Point}
 \rightarrow
 \text{HLS / FPGA}
-\]
+$$
 
 The Python implementation acts as the numerical reference or golden model.
 
@@ -624,20 +624,20 @@ Preferred workflow:
 
 ```text
 main
-  â†“
+  ↓
 focused feature branch
-  â†“
+  ↓
 implementation
-  â†“
+  ↓
 validation
-  â†“
+  ↓
 documentation
-  â†“
+  ↓
 staged review
-  â†“
+  ↓
 pull request
-  â†“
-merge
+  ↓
+mergee
 ```
 
 Before commit:
@@ -729,7 +729,7 @@ The repository should demonstrate progression from mathematical signal-processin
 
 The intended evidence chain is:
 
-\[
+$$
 \text{Mathematical Understanding}
 \rightarrow
 \text{Numerical Implementation}
@@ -741,6 +741,6 @@ The intended evidence chain is:
 \text{System Integration}
 \rightarrow
 \text{Real-Time Implementation Awareness}
-\]
+$$
 
 The quality of `DSP-Array-Processing-Lab` should be measured by technical depth, reproducibility, quantitative validation, and engineering reasoning rather than by the number of exercises.
