@@ -24,7 +24,7 @@ The repository uses several handoff types.
 
 ### PR Handoff
 
-A PR handoff records the final engineering state associated with a merged pull request.
+A PR handoff records the engineering context, decisions, validation, and expected resulting state associated with a pull request.
 
 A PR handoff should normally include:
 
@@ -32,7 +32,7 @@ A PR handoff should normally include:
 - date,
 - source branch,
 - base branch,
-- relevant commit and merge commit,
+- relevant commit information and final merge metadata when available,
 - purpose,
 - files changed,
 - technical changes,
